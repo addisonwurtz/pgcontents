@@ -18,7 +18,7 @@ PostgreSQL implementation of IPython/Jupyter ContentsManager API.
 from __future__ import unicode_literals
 from itertools import chain
 from tornado import web
-from traitlets import default
+from traitlets import default, Unicode
 
 from .api_utils import (
     base_directory_model,
@@ -65,6 +65,12 @@ class PostgresContentsManager(PostgresManagerMixin, ContentsManager):
     ContentsManager that persists to a postgres database rather than to the
     local filesystem.
     """
+
+    # Added to prevent jupyter lab failure
+    root_dir = Unicode("/", config=True)
+
+    preferred_dir = Unicode("", config=True)
+
     create_directory_on_startup = Bool(
         config=True,
         help="Create a root directory automatically?",
