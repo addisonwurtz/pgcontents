@@ -2,6 +2,18 @@
 Utilities for managing compat between notebook versions.
 """
 from traitlets.config import Config
+
+from jupyter_server.services.contents.checkpoints import (
+    Checkpoints,
+    GenericCheckpointsMixin,
+)
+from jupyter_server.services.contents.filemanager import FileContentsManager
+from jupyter_server.services.contents.filecheckpoints import (
+    GenericFileCheckpoints
+)
+from jupyter_server.services.contents.manager import ContentsManager
+from jupyter_server.utils import to_os_path
+"""
 from notebook.services.contents.checkpoints import (
     Checkpoints,
     GenericCheckpointsMixin,
@@ -12,6 +24,7 @@ from notebook.services.contents.filecheckpoints import (
 )
 from notebook.services.contents.manager import ContentsManager
 from notebook.utils import to_os_path
+"""
 from nbformat import from_dict, reads, writes
 from nbformat.v4.nbbase import (
     new_code_cell,
