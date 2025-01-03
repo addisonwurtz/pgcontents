@@ -66,15 +66,16 @@ class PostgresContentsManager(PostgresManagerMixin, ContentsManager):
     local filesystem.
     """
 
-    # Added to prevent jupyter lab failure
-    root_dir = Unicode("/", config=True)
-
-    preferred_dir = Unicode("", config=True)
 
     create_directory_on_startup = Bool(
         config=True,
         help="Create a root directory automatically?",
     )
+    
+    # Added to prevent jupyter lab failure
+    #root_dir = Unicode("/notebooks", config=True)
+    #preferred_dir = Unicode("/notebooks", config=True)
+    root_dir = None
 
     @default('checkpoints_class')
     def _default_checkpoints_class(self):
