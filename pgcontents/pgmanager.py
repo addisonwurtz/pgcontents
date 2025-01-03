@@ -73,9 +73,8 @@ class PostgresContentsManager(PostgresManagerMixin, ContentsManager):
     )
     
     # Added to prevent jupyter lab failure
-    #root_dir = Unicode("/notebooks", config=True)
+    root_dir = Unicode("/", config=True)
     #preferred_dir = Unicode("/notebooks", config=True)
-    root_dir = None
 
     @default('checkpoints_class')
     def _default_checkpoints_class(self):
