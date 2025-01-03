@@ -18,7 +18,12 @@ PostgreSQL implementation of IPython/Jupyter ContentsManager API.
 from __future__ import unicode_literals
 from itertools import chain
 from tornado import web
-from traitlets import default, Unicode
+from traitlets import (
+    Unicode, 
+    default, 
+)
+
+from jupyter_server.transutils import _i18n
 
 from .api_utils import (
     base_directory_model,
@@ -72,10 +77,15 @@ class PostgresContentsManager(PostgresManagerMixin, ContentsManager):
         help="Create a root directory automatically?",
     )
     
-    # Added to prevent jupyter lab failure
-    #root_dir = Unicode("/notebooks", config=True)
-    #preferred_dir = Unicode("/notebooks", config=True)
-    root_dir = None
+    root_dir = Unicode("/", config=True)
+
+    preferred_dir = Unicode(
+        "",
+        config=True,
+        help=_i18n(
+            "Preferred starting directory to use for notebooks. This is an API path (`/` separated, relative to root dir)"
+        ),
+    )
 
     @default('checkpoints_class')
     def _default_checkpoints_class(self):
@@ -109,7 +119,7 @@ class PostgresContentsManager(PostgresManagerMixin, ContentsManager):
 
     def ensure_root_directory(self):
         with self.engine.begin() as db:
-            ensure_directory(db, self.user_id, '')
+            ensure_directory(db, self.user_id, self.root_dir)
 
     def purge_db(self):
         """
